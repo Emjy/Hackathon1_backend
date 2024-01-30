@@ -8,14 +8,18 @@ const Booking = require('../models/bookings');
 
 router.get('/:departure/:arrival/:date', (req, res) => {
 
-    let dateFmt = new Date(req.params.date);
-
-    console.log(dateFmt)
+    let startDate = new Date(req.params.date);
+    let endDate = new Date(startDate)
+    endDate.setDate(startDate.getDate() + 1)
+ 
     Trip
         .find({
             departure: req.params.departure,
             arrival: req.params.arrival,
-            date: { $gte: dateFmt }
+            date: {
+                $gte: startDate,
+                $lt: endDate
+            }
         })
         .then((trips) => {
             console.log(trips)
