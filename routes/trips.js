@@ -4,6 +4,7 @@ var router = express.Router();
 
 require('../models/connection');
 const Trip = require('../models/trips');
+const Booking = require('../models/bookings');
 
 router.get('/:departure/:arrival/:date', (req, res) => {
 
@@ -26,5 +27,27 @@ router.get('/:departure/:arrival/:date', (req, res) => {
         })
         .catch((error) => console.error(error))
 })
+
+// Recupérer l'ID de la carte
+router.post('/:id' , (req, res) => {
+ 
+    Trip
+        .findById(req.params.id)
+        .then( (trip) => {
+            if (trip !== null) {
+                res.json({ result: true, trip });
+              } else {
+                res.json({ result: false, message: "Id doesn't exist" });
+              }
+        const newBooking = new Booking ({
+            emailUser: 'karl&emilien@slay.com',
+            isAdded: true,
+            isPurcharse: false,
+            trip,
+        });
+        newBooking.save().then(() => {console.log('trip added to cart')});
+            })
+        .catch((error) => console.error(error))
+    })
 
 module.exports = router;
