@@ -8,16 +8,17 @@ const Trip = require('../models/trips');
 
 // VISUALIZE ALLS ADDED TRIPS
 
-router.get('/', (req, res) => {
+router.get('/cart', (req, res) => {
 
   Booking
     .find({
       isAdded: true
     })
-    .then((trips) => {
-      console.log(trips)
-      if (trips.length !== 0) {
-        res.json({ result: true, trips })
+    .populate('trip')
+    .then((bookings) => {
+      console.log(bookings)
+      if (bookings.length !== 0) {
+        res.json({ result: true, bookings })
       } else {
         res.json({ result: false })
       }
