@@ -14,10 +14,11 @@ router.get('/cart', (req, res) => {
     .find({
       isAdded: true
     })
-    .then((trips) => {
-      console.log(trips)
-      if (trips.length !== 0) {
-        res.json({ result: true, trips })
+    .populate('trip')
+    .then((bookings) => {
+      console.log(bookings)
+      if (bookings.length !== 0) {
+        res.json({ result: true, bookings })
       } else {
         res.json({ result: false })
       }
@@ -67,7 +68,7 @@ router.post('/:id' , (req, res) => {
 
 router.put('/updatePurchase/:id', (req, res) => {
 
-  Booking.findByIdAndUpdate(req.params.id, { isPurcharse: true })
+  Booking.findByIdAndUpdate(req.params.id, { isPurcharse: true, isAdded: false })
     .then((updatedUser) => {
       if (updatedUser) {
         res.json({ result: true, updatedUser })
