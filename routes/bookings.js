@@ -5,6 +5,26 @@ require('../models/connection');
 const Booking = require('../models/bookings');
 const Trip = require('../models/trips');
 
+
+// VISUALIZE ALLS ADDED TRIPS
+
+router.get('/', (req, res) => {
+
+  Booking
+    .find({
+      isAdded: true
+    })
+    .then((trips) => {
+      console.log(trips)
+      if (trips.length !== 0) {
+        res.json({ result: true, trips })
+      } else {
+        res.json({ result: false })
+      }
+    })
+    .catch((error) => console.error(error))
+})
+
 // ADD TRIP TO BOOKING COLLECTION
 router.post('/:id' , (req, res) => {
 
