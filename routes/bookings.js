@@ -6,9 +6,9 @@ const Booking = require('../models/bookings');
 const Trip = require('../models/trips');
 
 
-// VISUALIZE ALLS ADDED TRIPS
+// VISUALIZE ALL ADDED TRIPS
 
-router.get('/', (req, res) => {
+router.get('/cart', (req, res) => {
 
   Booking
     .find({
@@ -18,6 +18,26 @@ router.get('/', (req, res) => {
       console.log(trips)
       if (trips.length !== 0) {
         res.json({ result: true, trips })
+      } else {
+        res.json({ result: false })
+      }
+    })
+    .catch((error) => console.error(error))
+})
+
+// VISUALIZE ALL PURCHASED TRIPS
+
+router.get('/purchase', (req, res) => {
+
+  Booking
+    .find({
+      isPurcharse: true
+    })
+    .populate('trip')
+    .then((bookings) => {
+      console.log(bookings)
+      if (bookings.length !== 0) {
+        res.json({ result: true, bookings })
       } else {
         res.json({ result: false })
       }
