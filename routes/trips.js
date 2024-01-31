@@ -49,10 +49,12 @@ router.post('/:id' , (req, res) => {
             isPurcharse: false,
             trip,
         });
-        newBooking.save().then(() => {console.log('trip added to cart')});
-            })
+            newBooking.save().then(() => { console.log('Trip added to cart') });
+        })
         .catch((error) => console.error(error))
-    })
+})
+
+
 
 
     

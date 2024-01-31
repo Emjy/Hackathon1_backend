@@ -21,4 +21,39 @@ router.post('/:id' , (req, res) => {
 
 });
 
+
+// UPDATE BOOKING isPurchase = TRUE 
+
+
+router.put('/updatePurchase/:id', (req, res) => {
+
+  Booking.findByIdAndUpdate(req.params.id, { isPurcharse: true })
+    .then((updatedUser) => {
+      if (updatedUser) {
+        res.json({ result: true, updatedUser })
+      } else {
+        res.json({ result: false, message: "Update not accepted" });
+      }
+
+    })
+    .catch((error) => console.error(error))
+})
+
+// UPDATE BOOKING isAdded = false 
+
+router.put('/updateCart/:id', (req, res) => {
+
+  Booking.findByIdAndUpdate(req.params.id, { isAdded: false })
+    .then((updatedUser) => {
+      if (updatedUser) {
+        res.json({ result: true, updatedUser })
+      } else {
+        res.json({ result: false, message: "Update not accepted" });
+      }
+
+    })
+    .catch((error) => console.error(error))
+})
+
+
 module.exports = router;
